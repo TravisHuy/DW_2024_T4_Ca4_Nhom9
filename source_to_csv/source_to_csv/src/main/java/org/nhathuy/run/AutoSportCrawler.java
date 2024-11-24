@@ -49,9 +49,9 @@ public class AutoSportCrawler {
             }
         };
 
-        // Thiết lập thời gian chạy (1h sáng mỗi ngày)
+        // Thiết lập thời gian chạy (11h sáng mỗi ngày)
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime firstRun = now.withHour(1).withMinute(0).withSecond(0);
+        LocalDateTime firstRun = now.withHour(11).withMinute(0).withSecond(0);
         if (now.compareTo(firstRun) > 0) {
             firstRun = firstRun.plusDays(1);
         }
@@ -76,13 +76,13 @@ public class AutoSportCrawler {
         System.out.println("1. Bắt đầu quá trình thu thập dữ liệu");
         Log log = new Log();
 
-        // Đọc thông tin cấu hình database từ file properties
+        // 2. Lấy thông tin cấu hình database (Properties) từ file dbControl.properties
         System.out.println("2. Đang đọc file properties...");
         Properties prop = new Properties();
         prop.load(DBProperties.class.getClassLoader().getResourceAsStream("dbControl.properties"));
         DBProperties.setProperties(prop);
 
-        // Thiết lập kết nối database với cơ chế retry
+        // 3. Kết nối DB Control
         Connection connection = null;
         int retryCount = 0;
 
@@ -90,11 +90,11 @@ public class AutoSportCrawler {
             System.out.println("3. Đang thử kết nối database lần " + (retryCount + 1));
             connection = DBConnect.getInstance().get();
             if (connection != null) {
-                // Lấy thông tin cấu hình từ database
+                // 4. Lấy config(phase="source to csv", description="GET_DATA_AUTO", status=1) trong config table
                 System.out.println("4. Kết nối database thành công");
                 Config config = ConfigController.getConfig(connection, Config.AUTO);
 
-                // Ghi log bắt đầu quá trình
+                // 5. Ghi log bắt đầu lấy dữ liệu
                 System.out.println("6. Đang ghi log bắt đầu...");
                 log.setTrackingDateTime(LocalDateTime.now());
                 log.setSource(BASE_URL);
@@ -109,25 +109,27 @@ public class AutoSportCrawler {
                 // Thu thập dữ liệu từ website
                 // Crawl dữ liệu
                 System.out.println("7. Bắt đầu crawl dữ liệu từ " + BASE_URL);
+                //6. Lấy dữ liệu
                 List<Sport> sports = SportCrawling.getAllSport(BASE_URL);
+                //4.7 Kiểm tra xem List có rỗng hay không
                 if (sports != null && !sports.isEmpty()) {
-                    // Ghi log khi thu thập dữ liệu thành công
+                    // 4.7.1 Ghi log lấy dữ liệu thành công
                     log.setTrackingDateTime(LocalDateTime.now());
                     log.setResult("Thành công");
                     log.setDetail("Lấy dữ liệu ngày " + sports.get(0).getDate() + " phụ kiện thể thao thành công");
                     LogController.insertLog(connection, log);
 
-                    // Xuất dữ liệu ra file CSV
+                    // 5. Load dữ liệu vào file CSV
                     String csvPath = config.getPathToSave() + "/sports_" + formatDate(LocalDateTime.now()) + ".csv";
                     ExportToExcel.exportToCSV(sports, csvPath);
 
-                    // Ghi log xuất CSV thành công
+                    // 6. Ghi log lấy load file csv thành công
                     log.setTrackingDateTime(LocalDateTime.now());
                     log.setResult("Thành công");
-                    log.setDetail("Load file CSV ngày: " + sports.get(0).getDate() + "thành công");
+                    log.setDetail("Load file CSV ngày: " + sports.get(0).getDate() + " thành công");
                     LogController.insertLog(connection, log);
                 } else {
-                    // Ghi log khi không thu thập được dữ liệu
+                    // 4.7.2 Ghi log lấy dữ liệu thất bại
                     log.setTrackingDateTime(LocalDateTime.now());
                     log.setConnectStatus(0);
                     log.setResult("Thất bại");
@@ -173,8 +175,8 @@ public class AutoSportCrawler {
     public static void main(String[] args) {
         try {
             System.out.println("Bắt đầu chạy chương trình...");
-            executeDataCollection(); // Chạy ngay lập tức
-            // startDailyCrawling(); // Có thể giữ lại nếu vẫn muốn schedule chạy hàng ngày
+//            executeDataCollection(); // Chạy ngay lập tức
+             startDailyCrawling(); // Có thể giữ lại nếu vẫn muốn schedule chạy hàng ngày
         } catch (Exception e) {
             e.printStackTrace();
         }
