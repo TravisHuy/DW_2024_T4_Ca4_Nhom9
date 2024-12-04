@@ -175,8 +175,8 @@ public class AutoSportCrawler {
     public static void main(String[] args) {
         try {
             System.out.println("Bắt đầu chạy chương trình...");
-//            executeDataCollection(); // Chạy ngay lập tức
-             startDailyCrawling(); // Có thể giữ lại nếu vẫn muốn schedule chạy hàng ngày
+            executeDataCollection(); // Chạy ngay lập tức
+//             startDailyCrawling(); // Có thể giữ lại nếu vẫn muốn schedule chạy hàng ngày
         } catch (Exception e) {
             e.printStackTrace();
         }
