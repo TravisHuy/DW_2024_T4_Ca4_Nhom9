@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DW:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DW_jar</output-path>
+    <root id="archive" name="DW.jar">
+      <element id="module-output" name="DW" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../mysql-connector-j-8.1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
