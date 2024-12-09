@@ -234,7 +234,7 @@ public class DataTransfer {
 												   String colors,
 												   String sizes,
 												   String materials) throws SQLException {
-		// 10. Kiểm tra xem sản phẩm đã tồn tại chưa
+		//  Kiểm tra xem sản phẩm đã tồn tại chưa
 		PreparedStatement checkStmt = destConn.prepareStatement(
 				"SELECT id FROM dim_product WHERE name = ? AND colors = ? AND sizes = ? AND materials = ?"
 		);
@@ -248,14 +248,14 @@ public class DataTransfer {
 			return existingProduct.getInt("id");
 		}
 
-		// 11. Nếu chưa tồn tại, thêm mới
+		//  Nếu chưa tồn tại, thêm mới
 		dimProductStmt.setString(1, name);
 		dimProductStmt.setString(2, colors);
 		dimProductStmt.setString(3, sizes);
 		dimProductStmt.setString(4, materials);
 		dimProductStmt.executeUpdate();
 
-		// 12. Lấy ID vừa được sinh ra
+		//  Lấy ID vừa được sinh ra
 		ResultSet generatedKeys = dimProductStmt.getGeneratedKeys();
 		if (generatedKeys.next()) {
 			return generatedKeys.getInt(1);
