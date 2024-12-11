@@ -1,0 +1,40 @@
+Unknown file .\config\config.properties
+.\config\config.properties (No such file or directory)	
+HH:mm:ss DD/MM/yyyy - 23:07:49 344/12/2024
+-----
+Unknown file ./config/config.properties
+./config/config.properties (No such file or directory)	
+HH:mm:ss DD/MM/yyyy - 23:08:10 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:09:24 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:10:30 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:13:45 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:14:54 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:15:57 344/12/2024
+-----
+Driver not connect
+com.mysql.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:24:25 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:32:36 344/12/2024
+-----
+Driver not connect
+com.mysql.cj.jdbc.Driver	
+HH:mm:ss DD/MM/yyyy - 23:33:13 344/12/2024
+-----
